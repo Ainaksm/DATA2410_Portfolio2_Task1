@@ -15,10 +15,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    my_cur = mydb.cursor()
-    my_cur.execute("SELECT * FROM products")
-    my_res = my_cur.fetchall()
-    return render_template("index.html", data=my_res)
+    my_cursor = mydb.cursor()
+    my_cursor.execute("SELECT * FROM products")
+    my_result = my_cursor.fetchall()
+    return render_template("index.html", data=my_result)
 
 
 @app.route('/product/<pid>', methods=['GET'])

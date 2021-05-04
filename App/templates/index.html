@@ -40,9 +40,9 @@
                     </h4>
 
                     {% if data %}
-                    {% for b in data.items %}
 
                     <div class="row" id="first_row">
+                        {% for d in data %}
                         <div class="col-md-4 mb-4">
                             <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
                                 <img src="/App/images/BulbTree.jpg"
@@ -54,15 +54,16 @@
                             </div>
                         </div>
                         <div class="col-md-8 mb-4">
-                            <h5 class="card-title">Very long post title</h5>
+                            <h5 class="card-title">{{ d.pname }}</h5>
                             <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ratione
-                                necessitatibus itaque error alias repellendus nemo reiciendis aperiam quisquam minus
-                                ipsam reprehenderit commodi ducimus, in dicta aliquam eveniet dignissimos magni.
+                                {{ d.description }}
+                                {{ d.price }}
                             </p>
                             <button type="button" class="btn btn-primary">View</button>
                         </div>
+                    {% endfor %}
                     </div>
+                    {% endif %}
                 </section>
             </div>
         </main>
