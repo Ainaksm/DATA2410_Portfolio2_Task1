@@ -11,6 +11,12 @@ CREATE TABLE IF NOT EXISTS products (
   PRIMARY KEY   (id)
 );
 
+DESCRIBE products;
+
 -- Adding data to "products"-table
--- INSERT INTO products (pName, description, price, picture) VALUES
--- ();
+INSERT INTO products (pName, description, price, picture) VALUES
+('Stone', 'Common stone.', 9000, 'stone');
+
+# A user with read-only access to a single table
+-- CREATE USER 'anonymous' IDENTIFIED BY 'PiWaC!23CyZzkAYYpi&2S';
+-- GRANT SELECT ON the_shop TO 'anonymous';

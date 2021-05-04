@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request
-#import mysql.connector
+import mysql.connector
 
-"""mydb = mysql.connector.connect(host="localhost", 
-                                user="root",   
-                                passwd="root", 
-                                database="the_shop")
+mydb = mysql.connector.connect(host="localhost",
+                               user="root",
+                               passwd="Melodi89",
+                               database="the_shop")
 my_cursor = mydb.cursor()
-my_cursor.execute("SELECT * FROM the_shop")
-my_result = my_cursor.fetchall()"""
+my_cursor.execute("SELECT * FROM products")
+my_result = my_cursor.fetchall()
 
 app = Flask(__name__)
 
