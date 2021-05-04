@@ -1,14 +1,13 @@
 from flask import Flask, render_template, request
 import mysql.connector
 
-# from sqlalchemy.dialects import mysql
-"""mydb = mysql.connector.connect(host="localhost",
+mydb = mysql.connector.connect(host="localhost",
                                user="root",
-                               passwd="root",
+                               passwd="Melodi89",
                                database="the_shop")
 my_cursor = mydb.cursor()
-my_cursor.execute("SELECT * FROM the_shop")
-my_result = my_cursor.fetchall()"""
+my_cursor.execute("SELECT * FROM products")
+my_result = my_cursor.fetchall()
 
 app = Flask(__name__)
 
@@ -19,4 +18,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", debug=True)
+    app.run(host="0.0.0.0", debug=True)
