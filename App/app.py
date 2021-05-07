@@ -26,7 +26,7 @@ def serve_page(path):
 def index():
     my_cursor = mydb.cursor()
     my_cursor.execute("SELECT * FROM products")
-    my_result = my_cursor.fetchone()
+    my_result = my_cursor.fetchall()[0]
     return render_template("index.html", row=my_result, name=my_result[1], description=my_result[2],
                            price=my_result[3], picture=my_result[4])
     # return jsonify(my_result)
