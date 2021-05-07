@@ -1,6 +1,6 @@
 console.log("Products frontend loaded");
 
-var images = [
+/*var images = [
     "/App/static/images/breezy-hanson-AXOF4dPcg2g-unsplash.jpg",
     "/App/static/images/curtis-hystad-twClBGWNo-g-unsplash.jpg",
     "/App/static/images/lucas-van-oort-LVJRzXqbJ1s-unsplash.jpg",
@@ -8,7 +8,7 @@ var images = [
     "/App/static/images/przemyslaw-zientala-54bRSFZkSGg-unsplash.jpg",
     "/App/static/images/rachael-gorjestani-XlA2994Txhw-unsplash.jpg",
     "/App/static/images/robert-wiedemann-d9yOg5zP-oQ-unsplash.jpg"
-]
+]*/
 
 var products = []
 
@@ -34,7 +34,7 @@ function render_products(data){
         //var p_btn = cloned_row.querySelector(".btn");
         //_btn.onclick =
 
-        console.log('ID: ${id}, Name: ${name}, Description: ${description}, Price: ${price}, Picture: ${picture}');
+        console.log(`ID: ${id}, Name: ${name}, Description: ${description}, Price: ${price}, Picture: ${picture}`);
         p_list.appendChild(cloned_row);
     }
     p_row.remove();
