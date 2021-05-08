@@ -5,7 +5,7 @@ import mysql.connector
 # remember to adjust
 mydb = mysql.connector.connect(host="localhost",
                                user="root",
-                               passwd="Melodi89",
+                               passwd="CebrayilDovletzade",
                                database="the_shop")
 """my_cursor = mydb.cursor()
 my_cursor.execute("SELECT * FROM products")
