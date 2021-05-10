@@ -37,8 +37,7 @@ def product(pid):
         my_cursor.execute("SELECT * FROM products")
         my_result = my_cursor.fetchall()
         for row in my_result:
-            return render_template("products/prod.html", pid=pid, id=row[0], name=row[1],
-                                   description=row[2], price=row[3], picture=row[4])
+            return render_template("products/prod.html", pid=pid, row=row)
 
 
 if __name__ == '__main__':

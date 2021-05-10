@@ -30,7 +30,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
             </ul>
             <!--Make this into basket? -->
@@ -42,18 +42,18 @@
 </nav>
 
 <main class="my-5">
-    {#{% if id == pid %}#}
+    {% if pid == row[0] %}
         <div class="container" id="product">
             <section class="text-center text-md-start">
                 <h3 class="mb-5">
-                    {{ name }}
+                    {{ row[1] }}
                 </h3>
                 <div class="row" id="the_row">
                     <div class="col-md-6 mb-4">
                         <div class="bg-image hover-overlay shadow-1-strong rounded ripple"
                              data-mdb-ripple-color="light">
-                            {% if picture %}
-                                <img src="{{ picture }}"
+                            {% if row[4] %}
+                                <img src="{{ row[4] }}"
                                      class="img-fluid card-image"
                                      style="width: 700px;height: 700px; object-fit: cover;"/>
                             {% else %}
@@ -68,10 +68,10 @@
                     </div>
                     <div class="col-md-6 mb-4">
                         <p>
-                            {{ description }}
+                            {{ row[2] }}
                         </p>
                         <p>
-                            $ {{ price }}
+                            $ {{ row[3] }}
                         </p>
                         <!-- Button that puts item in cart -->
                         <button type="button" class="btn btn-primary">Add to Cart</button>
@@ -79,7 +79,7 @@
                 </div>
             </section>
         </div>
-    {#{% endif %}#}
+    {% endif %}
 </main>
 
 {#<script src="{{ url_for('static', filename='products.js')}}"></script>#}
