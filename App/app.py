@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, url_for
 import mysql.connector
 
 # remember to adjust
@@ -11,8 +11,7 @@ mydb = mysql.connector.connect(host="localhost",
 my_cursor.execute("SELECT * FROM products")
 my_result = my_cursor.fetchall()"""
 
-app = Flask(__name__, static_folder="/App/static", static_url_path="")
-
+app = Flask(__name__)
 
 """"@app.route('/', defaults={'path': 'index.html'})
 @app.route('/<path>')
@@ -26,18 +25,22 @@ def serve_page(path):
 def index():
     my_cursor = mydb.cursor()
     my_cursor.execute("SELECT * FROM products")
-    my_result = my_cursor.fetchall()[0]
-    return render_template("index.html", row=my_result, name=my_result[1], description=my_result[2],
-                           price=my_result[3], picture=my_result[4])
+    my_result = my_cursor.fetchall()
+    return render_template("index.html", row=my_result)
     # return jsonify(my_result)
 
 
-@app.route('/product/<pid>', methods=['GET'])
+@app.route('/product/<pid>', methods=['GET', 'POST'])
 def product(pid):
-    my_cursor = mydb.cursor()
-    my_cursor.execute("SELECT * FROM products")
-    my_result = my_cursor.fetchone(pid)
-    pass
+    if request.method == "GET":
+        my_cursor = mydb.cursor()
+        my_cursor.execute("SELECT * FROM products")
+        my_result = my_cursor.fetchmany()
+        for row in my_result:
+            return render_template("products/prod.html", pid=pid, row=row)
+
+    # if request.method == "POST":
+        # method for adding to cart
 
 
 if __name__ == '__main__':
