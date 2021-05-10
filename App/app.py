@@ -26,9 +26,10 @@ def index():
     my_cursor = mydb.cursor()
     my_cursor.execute("SELECT * FROM products")
     my_result = my_cursor.fetchall()
-    for row in my_result:
-        return render_template("index.html", row=row, id=row[0], name=row[1],
-                               description=row[2], price=row[3], picture=row[4])
+    return render_template("index.html", row=my_result)
+    # for row in my_result:
+    #     return render_template("index.html", row=row, id=row[0], name=row[1],
+    #                            description=row[2], price=row[3], picture=row[4])
     # return jsonify(my_result)
 
 
