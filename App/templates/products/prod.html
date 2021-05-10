@@ -42,7 +42,7 @@
 </nav>
 
 <main class="my-5">
-    {% if pid == row[0] %}
+{#    {% if pid == row[0] %}#}
         <div class="container" id="product">
             <section class="text-center text-md-start">
                 <h3 class="mb-5">
@@ -74,12 +74,12 @@
                             $ {{ row[3] }}
                         </p>
                         <!-- Button that puts item in cart -->
-                        <button type="button" class="btn btn-primary">Add to Cart</button>
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
                     </div>
                 </div>
             </section>
         </div>
-    {% endif %}
+{#    {% endif %}#}
 </main>
 
 {#<script src="{{ url_for('static', filename='products.js')}}"></script>#}

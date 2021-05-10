@@ -35,9 +35,12 @@ def product(pid):
     if request.method == "GET":
         my_cursor = mydb.cursor()
         my_cursor.execute("SELECT * FROM products")
-        my_result = my_cursor.fetchall()
+        my_result = my_cursor.fetchmany()
         for row in my_result:
             return render_template("products/prod.html", pid=pid, row=row)
+
+    # if request.method == "POST":
+        # method for adding to cart
 
 
 if __name__ == '__main__':
