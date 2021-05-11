@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, render_template, request, jsonify, url_for
+from flask import Flask, render_template, request, jsonify, url_for, session, redirect, flash
 import mysql.connector
 
 # remember to adjust
@@ -27,20 +27,14 @@ def index():
     my_cursor.execute("SELECT * FROM products")
     my_result = my_cursor.fetchall()
     return render_template("index.html", row=my_result)
-    # return jsonify(my_result)
 
 
-@app.route('/product/<pid>', methods=['GET', 'POST'])
+@app.route('/product/<int:pid>', methods=['GET'])
 def product(pid):
-    if request.method == "GET":
-        my_cursor = mydb.cursor()
-        my_cursor.execute("SELECT * FROM products")
-        my_result = my_cursor.fetchmany()
-        for row in my_result:
-            return render_template("products/prod.html", pid=pid, row=row)
-
-    # if request.method == "POST":
-        # method for adding to cart
+    my_cursor = mydb.cursor()
+    my_cursor.execute("SELECT * FROM products WHERE id = %d" % pid)
+    my_result = my_cursor.fetchone()
+    return render_template("products/prod.html", pid=pid, row=my_result)
 
 
 if __name__ == '__main__':

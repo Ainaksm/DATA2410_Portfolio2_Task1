@@ -20,6 +20,7 @@
 </head>
 <body>
 
+<!----- Navbar ----->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Our Shop</a>
@@ -33,7 +34,7 @@
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
             </ul>
-            <!--Make this into basket? -->
+            <!--Amount in Cart? -->
             <form class="d-flex">
                 <button class="btn btn-outline-success" type="submit">Cart</button>
             </form>
@@ -41,8 +42,8 @@
     </div>
 </nav>
 
+<!----- Main content ----->
 <main class="my-5">
-{#    {% if pid == row[0] %}#}
         <div class="container" id="product">
             <section class="text-center text-md-start">
                 <h3 class="mb-5">
@@ -55,11 +56,11 @@
                             {% if row[4] %}
                                 <img src="{{ row[4] }}"
                                      class="img-fluid card-image"
-                                     style="width: 700px;height: 700px; object-fit: cover;"/>
+                                     style="width: 700px;height: 400px; object-fit: cover;"/>
                             {% else %}
                                 <img src="https://images.unsplash.com/photo-1610337673044-720471f83677?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2166&q=80"
                                      class="img-fluid card-image"
-                                     style="width: 700px;height: 700px; object-fit: cover;"/>
+                                     style="width: 700px;height: 400px; object-fit: cover;"/>
                             {% endif %}
                             <a href="#!">
                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
@@ -73,13 +74,12 @@
                         <p>
                             $ {{ row[3] }}
                         </p>
-                        <!-- Button that puts item in cart -->
-                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
+                        <input type="submit" value="Add to cart" class="btn btn-secondary"/>
                     </div>
                 </div>
             </section>
         </div>
-{#    {% endif %}#}
 </main>
 
 {#<script src="{{ url_for('static', filename='products.js')}}"></script>#}

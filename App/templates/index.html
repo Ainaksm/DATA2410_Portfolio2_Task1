@@ -31,6 +31,7 @@
 </head>
 <body>
 
+<!----- Navbar ----->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Our Shop</a>
@@ -52,6 +53,7 @@
     </div>
 </nav>
 
+<!----- Main content ----->
 <main class="my-5">
     <div class="container" id="product_list">
 
@@ -90,6 +92,9 @@
                             $ {{ d[3] }}
                         </p>
                         <a class="btn btn-primary" href="/product/{{ d[0] }}" role="button">View Item</a>
+                        <p></p>
+                        <input type="text" class="product-quantity" name="quantity" value="1" size="2"/>
+                        <input type="submit" value="Add to cart" class="btn btn-tertiary"/>
                     </div>
                 </div>
             {% endfor %}
@@ -97,7 +102,7 @@
     </div>
 </main>
 
-<script src="{{ url_for('static', filename='products.js')}}"></script>
+{#<script src="{{ url_for('static', filename='products.js')}}"></script>#}
 
 </body>
 </html>
