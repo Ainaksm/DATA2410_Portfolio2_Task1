@@ -1,23 +1,13 @@
-import flask
-from flask import Flask, render_template, request, jsonify, url_for, session, redirect, flash
+from flask import Flask, render_template, request, url_for, session, redirect
 import mysql.connector
 
 # remember to adjust
 mydb = mysql.connector.connect(host="localhost",
                                user="root",
-                               passwd="Melodi89",
+                               passwd="root",
                                database="the_shop")
-"""my_cursor = mydb.cursor()
-my_cursor.execute("SELECT * FROM products")
-my_result = my_cursor.fetchall()"""
 
 app = Flask(__name__)
-
-""""@app.route('/', defaults={'path': 'index.html'})
-@app.route('/<path>')
-def serve_page(path):
-    print("Request received for {}".format(path))
-    return flask.send_from_directory('/App/static', path)"""
 
 
 @app.route('/', methods=['GET'])
