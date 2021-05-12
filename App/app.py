@@ -37,6 +37,53 @@ def product(pid):
     return render_template("products/prod.html", pid=pid, row=my_result)
 
 
+@app.route('/add-to-cart', methods=["POST"])
+def add_to_cart():
+    try:
+        product_id = request.form.get('product_id')
+        qty = request.form.get('quantity')
+
+        my_cursor = mydb.cursor()
+        my_cursor.execute("SELECT * FROM products WHERE id = %d" % product_id)
+        my_product = my_cursor.fetchone()
+
+        if product_id and qty and request.method == "POST":
+            product_array = {product_id: {'name': my_product[1], 'price': my_product[3], 'quantity': qty}}
+
+            if 'ShoppingCart' in session:
+                print(session['ShoppingCart'])
+
+                if product_id in session['ShoppingCart']:
+                    print("Product already in cart")
+                else:
+                    session['ShoppingCart'] = merging_arrays(session['ShoppingCart'], product_array)
+                    # Redirecting to same page
+                    return redirect(request.referrer)
+
+            else:
+                session['ShoppingCart'] = product_array
+                # Redirecting to same page
+                return redirect(request.referrer)
+
+    except Exception as e:
+        print(e)
+    finally:
+        # Redirecting to same page
+        return redirect(request.referrer)
+
+
+def merging_arrays(array, other_array):
+    if isinstance(array, list) and isinstance(other_array, list):
+        return array + other_array
+    elif isinstance(array, dict) and isinstance(other_array, dict):
+        return dict(list(array.items()) + list(other_array.items()))
+    elif isinstance(array, set) and isinstance(other_array, set):
+        return array.union(other_array)
+    else:
+        return False
+
+
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
     mydb.close()
