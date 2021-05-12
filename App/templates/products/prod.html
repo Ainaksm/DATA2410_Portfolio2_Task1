@@ -36,7 +36,7 @@
             </ul>
             <!--Amount in Cart? -->
             <form class="d-flex">
-                <button class="btn btn-outline-success" type="submit">Cart</button>
+                <button class="btn btn-outline-success" type="submit">Cart({{session['Shoppingcart']}})</button>
             </form>
         </div>
     </div>
@@ -74,8 +74,16 @@
                         <p>
                             $ {{ row[3] }}
                         </p>
-                        <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
-                        <input type="submit" value="Add to cart" class="btn btn-secondary"/>
+                        <form action="{{url_for('addCart')}}" method="post">
+                            <input type="hidden" name="product_id" value="{{row[0]}}">
+                            <button type="submit" class="btn btn-sm btn-warning">Add to cart</button>
+                            <label for="">Quantity:</label>
+                            <input type="number" name="quantity" id="" value="1" min="1" max="10">
+
+
+                        </form>
+                       <!-- <input type="text" class="product-quantity" name="quantity" value="1" size="2" />-->
+                      <!--  <input type="submit" value="Add to cart" class="btn btn-secondary"/>-->
                     </div>
                 </div>
             </section>
