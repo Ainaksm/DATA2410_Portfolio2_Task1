@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, session, redirect
 import mysql.connector
+import pymysql
 from mysql.connector.cursor import MySQLCursor
 
 # remember to adjust
@@ -37,8 +38,9 @@ def productToCart(pid):
     return render_template("products/prod.html", pid=pid, row=my_result)
 
 
-@app.route('/addcart', methods=['POST', 'GET'])
+@app.route('/addtocart', methods=['POST', 'GET'])
 def AddCart():
+    Cursor = None
     try:
 
         product_id = int(request.form.get('product_id'))
@@ -48,16 +50,25 @@ def AddCart():
 
         if product_id and quantity and request.method == "POST":
 
-            dictItem = {product_id: {'name': product.pName, 'description': product.description, 'price': product.price,
-            'picture': product.picture, 'quantity': quantity}}
+            # conn = mysql.connect()
+            # cursor = conn.cursor(pymysql.cursors.DictCursor)
+            # cursor.execute("SELECT * FROM products where id=%d" % product_id)
+            # row = cursor.fetchone()
 
+            # dictItem = {row['id']: {'name': row['pName'], 'description': row['description'], 'price': row['price'],
+            # 'picture':row['picture'], 'quantity':quantity}}
+
+            dictItem = {product_id: {'name': product.pName, 'description': product.description, 'price': product.price,
+                                     'picture': product.picture, 'quantity': quantity}}
+
+            dictItem = productToCart(product_id)
             if 'Shoppcart' in session:
                 print(session['Shoppingcart'])
 
 
             else:
                 session['Shoppingcart'] = dictItem
-                return redirect(request.referrer)
+                return redirect(url_for('index'))
 
     except Exception as e:
         print(e)
