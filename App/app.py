@@ -43,8 +43,7 @@ def product(pid):
 def add_to_cart():
     try:
         product_id = request.form.get('product_id')
-
-        qty = int(request.form.get('quantity'))
+        qty = request.form.get('quantity')
 
         my_cursor = mydb.cursor()
         my_cursor.execute("SELECT * FROM products WHERE id = %s" % product_id)
@@ -75,6 +74,20 @@ def add_to_cart():
         return redirect(request.referrer)
 
 
+@app.route('/cart')
+def cart():
+    # if 'ShoppingCart' not in session or len(session['ShoppingCart']) <= 0:
+    #     return redirect(url_for('home'))
+    #
+    # subtotal = 0
+    # for key, my_product in session['ShoppingCart'].items():
+    #     subtotal += int(my_product[3]) * int(my_product['quantity'])
+    if 'ShoppingCart' not in session:
+        return redirect(request.referrer)
+
+    return render_template('products/cart.html')
+
+
 def merging_arrays(array, other_array):
     if isinstance(array, list) and isinstance(other_array, list):
         return array + other_array
@@ -84,7 +97,6 @@ def merging_arrays(array, other_array):
         return array.union(other_array)
     else:
         return False
-
 
 
 if __name__ == '__main__':
