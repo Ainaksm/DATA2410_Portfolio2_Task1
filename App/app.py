@@ -5,7 +5,7 @@ import mysql.connector
 # remember to adjust
 mydb = mysql.connector.connect(host="localhost",
                                user="root",
-                               passwd="Melodi89",
+                               passwd="CebrayilDovletzade",
                                database="the_shop")
 """my_cursor = mydb.cursor()
 my_cursor.execute("SELECT * FROM products")
@@ -85,5 +85,5 @@ def merging_arrays(array, other_array):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="localhost", debug=True)
     mydb.close()
