@@ -44,7 +44,7 @@ def add_to_cart():
     try:
         product_id = request.form.get('product_id')
 
-        qty = request.form.get('quantity')
+        qty = int(request.form.get('quantity'))
 
         my_cursor = mydb.cursor()
         my_cursor.execute("SELECT * FROM products WHERE id = %s" % product_id)
