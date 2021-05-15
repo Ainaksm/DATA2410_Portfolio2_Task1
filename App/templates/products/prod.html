@@ -47,6 +47,7 @@
 <main class="my-5">
         <div class="container" id="product">
             <section class="text-center text-md-start">
+
                 <h3 class="mb-5">
                     {{ row[1] }}
                 </h3>
@@ -75,6 +76,7 @@
                         <p>
                             $ {{ row[3] }}
                         </p>
+
                         <form action="{{ url_for('AddCart') }}" method="post">
                             <input type="hidden" name="product_id" value="{{row[0]}}">
                             <button type="submit" class="btn btn-sm btn-warning">Add to cart</button>
