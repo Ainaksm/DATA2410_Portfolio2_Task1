@@ -12,6 +12,8 @@ my_cursor.execute("SELECT * FROM products")
 my_result = my_cursor.fetchall()"""
 
 app = Flask(__name__)
+# secret key for session
+app.config['SECRET_KEY'] = 'secretestsecret'
 
 """"@app.route('/', defaults={'path': 'index.html'})
 @app.route('/<path>')
@@ -41,10 +43,11 @@ def product(pid):
 def add_to_cart():
     try:
         product_id = request.form.get('product_id')
+
         qty = request.form.get('quantity')
 
         my_cursor = mydb.cursor()
-        my_cursor.execute("SELECT * FROM products WHERE id = %d" % product_id)
+        my_cursor.execute("SELECT * FROM products WHERE id = %s" % product_id)
         my_product = my_cursor.fetchone()
 
         if product_id and qty and request.method == "POST":
