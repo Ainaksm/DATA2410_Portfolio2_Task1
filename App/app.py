@@ -41,37 +41,72 @@ def product(pid):
 
 @app.route('/add-to-cart', methods=["POST"])
 def add_to_cart():
+    cursor = None
     try:
         product_id = request.form.get('product_id')
-        qty = request.form.get('quantity')
+        qty = int(request.form.get('quantity'))
 
-        my_cursor = mydb.cursor()
-        my_cursor.execute("SELECT * FROM products WHERE id = %s" % product_id)
-        my_product = my_cursor.fetchone()
+
 
         if product_id and qty and request.method == "POST":
+            my_cursor = mydb.cursor()
+            my_cursor.execute("SELECT * FROM products WHERE id = %s" % product_id)
+            my_product = my_cursor.fetchone()
             product_array = {product_id: {'name': my_product[1], 'price': my_product[3], 'quantity': qty}}
 
+            all_total_price = 0
+            all_total_quantity = 0
+
+            session.modified = True
             if 'ShoppingCart' in session:
-                print(session['ShoppingCart'])
-
-                if product_id in session['ShoppingCart']:
-                    print("Product already in cart")
+                if my_product['id'] in session['ShoppingCart']:
+                    for key, value in session['ShoppingCart'].items():
+                        if my_product['id'] == key:
+                            old_quantity = session['ShoppingCart'][key]['quantity']
+                            total_quantity = old_quantity + qty
+                            session['ShoppingCart'][key]['quantity'] = total_quantity
+                            session['ShoppingCart'][key]['total_price'] = total_quantity * my_product['price']
+                #print(session['ShoppingCart'])
                 else:
-                    session['ShoppingCart'] = merging_arrays(session['ShoppingCart'], product_array)
-                    # Redirecting to same page
-                    return redirect(request.referrer)
+                 session['cart_item'] = merging_arrays(session['ShoppingCart'], product_array)
 
-            else:
-                session['ShoppingCart'] = product_array
+                for key, value in session['ShoppinCart'].items():
+                    individual_quantity = int(session['ShoppingCart'][key]['quantity'])
+                    individual_price = float(session['ShoppingCart'][key]['total_price'])
+                    all_total_quantity = all_total_quantity + individual_quantity
+                    all_total_price = all_total_price + individual_price
+
+                else:
+                    session['ShoppingCart'] = product_array
+                    all_total_quantity = all_total_quantity + qty
+                    all_total_price = all_total_price + qty * my_product['price']
+
+                session['all_total_quantity'] = all_total_quantity
+                session['all_total_price'] = all_total_price
+
+                return redirect(url_for("index"))
+
+                #if product_id in session['ShoppingCart']:
+                 #   print("Product already in cart")
+                #else:
+                 #   session['ShoppingCart'] = merging_arrays(session['ShoppingCart'], product_array)
+                    # Redirecting to same page
+        else:
+            return 'Error while adding item to cart'
+                #  return redirect(request.referrer)
+
+            #else:
+             #   session['ShoppingCart'] = product_array
                 # Redirecting to same page
-                return redirect(request.referrer)
+              #  return redirect(request.referrer)
 
     except Exception as e:
         print(e)
     finally:
+        my_cursor.close()
+        cursor.close()
         # Redirecting to same page
-        return redirect(request.referrer)
+        #return redirect(request.referrer)
 
 
 @app.route('/cart')
