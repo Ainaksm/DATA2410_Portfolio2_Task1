@@ -14,7 +14,7 @@
             </ul>
             <!--Cart -->
             <form class="d-flex">
-                <button class="btn btn-outline-success" type="submit">Cart({{session['ShoppingCart'] | length}})</button>
+                <a class="btn btn-outline-success" href="{{ url_for('cart') }}" type="submit">Cart({{ session['ShoppingCart'] | length }})</a>
             </form>
         </div>
     </div>
