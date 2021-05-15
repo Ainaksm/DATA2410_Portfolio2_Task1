@@ -1,16 +1,23 @@
-from flask import Flask, render_template, request, url_for, session, redirect
+import flask
+from flask import Flask, render_template, request, jsonify, url_for, session, redirect, flash
 import mysql.connector
-import pymysql
-from mysql.connector.cursor import MySQLCursor
 
 # remember to adjust
 mydb = mysql.connector.connect(host="localhost",
                                user="root",
-                               passwd="CebrayilDovletzade",
+                               passwd="Melodi89",
                                database="the_shop")
+"""my_cursor = mydb.cursor()
+my_cursor.execute("SELECT * FROM products")
+my_result = my_cursor.fetchall()"""
 
 app = Flask(__name__)
-app.secret_key = "super secret key"
+
+""""@app.route('/', defaults={'path': 'index.html'})
+@app.route('/<path>')
+def serve_page(path):
+    print("Request received for {}".format(path))
+    return flask.send_from_directory('/App/static', path)"""
 
 
 @app.route('/', methods=['GET'])
@@ -30,47 +37,53 @@ def product(pid):
     return render_template("products/prod.html", pid=pid, row=my_result)
 
 
-@app.route('/product/<int:pid>', methods=['GET'])
-def productToCart(pid):
-    my_cursor = mydb.cursor()
-    my_cursor.execute("SELECT pName,description,price,picture FROM products WHERE id = %d" % pid)
-    my_result = my_cursor.fetchone()
-    return render_template("products/prod.html", pid=pid, row=my_result)
-
-
-@app.route('/addtocart', methods=['POST', 'GET'])
-def AddCart():
+@app.route('/add-to-cart', methods=["POST"])
+def add_to_cart():
     try:
+        product_id = request.form.get('product_id')
+        qty = request.form.get('quantity')
 
-        product_id = int(request.form.get('product_id'))
-        quantity = int(request.form.get('quantity'))
+        my_cursor = mydb.cursor()
+        my_cursor.execute("SELECT * FROM products WHERE id = %d" % product_id)
+        my_product = my_cursor.fetchone()
 
+        if product_id and qty and request.method == "POST":
+            product_array = {product_id: {'name': my_product[1], 'price': my_product[3], 'quantity': qty}}
 
+            if 'ShoppingCart' in session:
+                print(session['ShoppingCart'])
 
-        if product_id and quantity and request.method == "POST":
-
-
-
-            dictItem = productToCart(product_id)
-
-            if 'Shoppingcart' in session:
-                print(session['Shoppingcart'])
+                if product_id in session['ShoppingCart']:
+                    print("Product already in cart")
+                else:
+                    session['ShoppingCart'] = merging_arrays(session['ShoppingCart'], product_array)
+                    # Redirecting to same page
+                    return redirect(request.referrer)
 
             else:
-                     session['Shoppingcart'] = dictItem
-                     return redirect(request.referrer)
-
+                session['ShoppingCart'] = product_array
+                # Redirecting to same page
+                return redirect(request.referrer)
 
     except Exception as e:
         print(e)
-
-
     finally:
+        # Redirecting to same page
         return redirect(request.referrer)
 
+
+def merging_arrays(array, other_array):
+    if isinstance(array, list) and isinstance(other_array, list):
+        return array + other_array
+    elif isinstance(array, dict) and isinstance(other_array, dict):
+        return dict(list(array.items()) + list(other_array.items()))
+    elif isinstance(array, set) and isinstance(other_array, set):
+        return array.union(other_array)
+    else:
+        return False
 
 
 
 if __name__ == '__main__':
-    app.run(host="localhost", debug=True)
+    app.run(host="0.0.0.0", debug=True)
     mydb.close()
