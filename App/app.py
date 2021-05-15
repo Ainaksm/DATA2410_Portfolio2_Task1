@@ -76,16 +76,24 @@ def add_to_cart():
 
 @app.route('/cart')
 def cart():
-    # if 'ShoppingCart' not in session or len(session['ShoppingCart']) <= 0:
-    #     return redirect(url_for('home'))
-    #
-    # subtotal = 0
-    # for key, my_product in session['ShoppingCart'].items():
-    #     subtotal += int(my_product[3]) * int(my_product['quantity'])
-    if 'ShoppingCart' not in session:
-        return redirect(request.referrer)
+    if 'ShoppingCart' not in session or len(session['ShoppingCart']) <= 0:
+        return redirect(url_for('home'))
 
-    return render_template('products/cart.html')
+    total = 0
+    for key, my_product in session['ShoppingCart'].items():
+        total += int(my_product['price']) * int(my_product['quantity'])
+
+    return render_template('products/cart.html', total=total)
+
+
+@app.route('/remove-item/<int:pid>')
+def remove_item(pid):
+    pass
+
+
+@app.route('/order')
+def order():
+    pass
 
 
 def merging_arrays(array, other_array):
