@@ -38,8 +38,12 @@
                         <p>
                             $ {{ row[3] }}
                         </p>
-                        <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
-                        <input type="submit" value="Add to cart" class="btn btn-secondary"/>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_id" value="{{ row[0] }}">
+                            <button type="submit" class="btn btn-sm btn-warning">Add to Cart</button>
+                            <label for="">Quantity:</label>
+                            <input type="number" class="product-quantity" name="quantity" value="1" size="2"/>
+                        </form>
                     </div>
                 </div>
             </section>
