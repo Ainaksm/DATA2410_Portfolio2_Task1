@@ -77,7 +77,7 @@ def add_to_cart():
 @app.route('/cart')
 def cart():
     if 'ShoppingCart' not in session or len(session['ShoppingCart']) <= 0:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
 
     total = 0
     for key, my_product in session['ShoppingCart'].items():
@@ -87,8 +87,19 @@ def cart():
 
 
 @app.route('/remove-item/<int:pid>')
-def remove_item(pid):
-    pass
+def remove_product(pid):
+    if 'ShoppingCart' not in session or len(session['ShoppingCart']) <= 0:
+        return redirect(url_for('index'))
+
+    try:
+        session.modified = True
+        for key, products in session['ShoppingCart'].items():
+            if int(key) == pid:
+                session['ShoppingCart'].pop(key, None)
+                return redirect(url_for('cart'))
+    except Exception as e:
+        print(e)
+        return redirect(url_for('cart'))
 
 
 @app.route('/order')
