@@ -52,16 +52,25 @@ def add_to_cart():
         if product_id and qty and request.method == "POST":
             product_array = {product_id: {'name': my_product[1], 'price': my_product[3], 'quantity': qty}}
 
+            session.modified = True
             if 'ShoppingCart' in session:
+
+                # if product_id in session['ShoppingCart']:
+                #     for key, my_product in session['ShoppingCart'].items():
+                #         if product_id == key:
+                #             prev_qty = session['ShoppingCart'][key]['quantity']
+                #             tot_qty = prev_qty + qty
+                #             session['ShoppingCart'][key]['quantity'] = tot_qty
+                #         # print("Product already in cart")
+                # else:
+                #     session['ShoppingCart'] = merging_arrays(session['ShoppingCart'], product_array)
+                #     # Redirecting to same page
+                #     return redirect(request.referrer)
+                session['ShoppingCart'] = merging_arrays(session['ShoppingCart'], product_array)
+
                 print(session['ShoppingCart'])
-
-                if product_id in session['ShoppingCart']:
-                    print("Product already in cart")
-                else:
-                    session['ShoppingCart'] = merging_arrays(session['ShoppingCart'], product_array)
-                    # Redirecting to same page
-                    return redirect(request.referrer)
-
+                # Redirecting to same page
+                return redirect(request.referrer)
             else:
                 session['ShoppingCart'] = product_array
                 # Redirecting to same page
@@ -76,18 +85,21 @@ def add_to_cart():
 
 @app.route('/cart')
 def cart():
+    # Redirecting to start-page if session not started or nothing is pur in the cart
     if 'ShoppingCart' not in session or len(session['ShoppingCart']) <= 0:
         return redirect(url_for('index'))
 
     total = 0
+    # Calculating grand total
     for key, my_product in session['ShoppingCart'].items():
         total += int(my_product['price']) * int(my_product['quantity'])
 
     return render_template('products/cart.html', total=total)
 
 
-@app.route('/remove-item/<int:pid>')
+@app.route('/remove-product/<int:pid>')
 def remove_product(pid):
+    # Redirecting to start-page if session not started or nothing is pur in the cart
     if 'ShoppingCart' not in session or len(session['ShoppingCart']) <= 0:
         return redirect(url_for('index'))
 
