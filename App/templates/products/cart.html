@@ -6,21 +6,28 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Product</th>
-            <th scope="col">Price</th>
+            <th scope="col">Unit Price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Remove</th>
         </tr>
         </thead>
         <tbody>
         {% for key, my_product in session['ShoppingCart'].items() %}
-        <tr>
-            <th scope="row">{{ loop.index }}</th>
-            <td>{{ my_product.name }}</td>
-            <td>${{ my_product.price }}</td>
-            <td>{{ my_product.quantity }}</td>
-            <td><a href="#">Remove</a></td>
-        </tr>
+{#            {% set qty = session['ShoppingCart'][key]['quantity'] %}#}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ my_product.name }}</td>
+                <td>${{ my_product.price }}</td>
+                <td>{{ my_product.quantity }}</td>
+                <td><a href="{{ url_for('remove_product', pid=key) }}" type="button" class="btn btn-danger btn-sm px-3">x</a>
+                </td>
+            </tr>
         {% endfor %}
+
+        <tr>
+            <td><h5><strong>Total:</strong></h5></td>
+            <td><h5><strong>${{ total }}</strong></h5></td>
+        </tr>
         </tbody>
     </table>
 {% endblock content %}
