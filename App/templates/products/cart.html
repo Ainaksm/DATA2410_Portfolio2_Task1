@@ -6,7 +6,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Product</th>
-            <th scope="col">Price</th>
+            <th scope="col">Unit Price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Remove</th>
         </tr>
@@ -18,9 +18,14 @@
             <td>{{ my_product.name }}</td>
             <td>${{ my_product.price }}</td>
             <td>{{ my_product.quantity }}</td>
-            <td><a href="#">Remove</a></td>
+            <td><a href="#" type="button" class="btn btn-danger btn-sm px-3">x</a></td>
         </tr>
         {% endfor %}
+
+        <tr>
+            <td><h5><strong>Total:</strong></h5></td>
+            <td><h5><strong>${{total}}</strong></h5></td>
+        </tr>
         </tbody>
     </table>
 {% endblock content %}
