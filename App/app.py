@@ -116,7 +116,13 @@ def remove_product(pid):
 
 @app.route('/order')
 def order():
-    pass
+    total = 0
+    for key, my_product in session['ShoppingCart'].items():
+        discount = 100
+        total += int(my_product['price']) * int(my_product['quantity'])
+        amountToPay = total - total * (discount / 100)
+
+    return render_template('products/order.html', total=total, amountToPay=amountToPay, discount=discount)
 
 
 def merging_arrays(array, other_array):
