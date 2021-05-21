@@ -1,15 +1,15 @@
-from flask import Flask, render_template, request, jsonify, url_for, session, redirect, flash
+from flask import Flask, render_template, request, url_for, session, redirect
 import mysql.connector
 
-# mydb = mysql.connector.connect(host="mysql1",
-#                                user="anonymous",
-#                                password="root",
-#                                database="the_shop")
-# remember to adjust
-mydb = mysql.connector.connect(host="localhost",
-                               user="root",
-                               passwd="Melodi89",
+mydb = mysql.connector.connect(host="mysql1",
+                               user="anonymous",
+                               password="root",
                                database="the_shop")
+# remember to adjust
+# mydb = mysql.connector.connect(host="localhost",
+#                                user="root",
+#                                passwd="Melodi89",
+#                                database="the_shop")
 
 app = Flask(__name__)
 # secret key for session
@@ -131,5 +131,5 @@ def merging_arrays(array, other_array):
 
 
 if __name__ == '__main__':
-    app.run(host="localhost", debug=True)
+    app.run(host="0.0.0.0", debug=True)
     mydb.close()
