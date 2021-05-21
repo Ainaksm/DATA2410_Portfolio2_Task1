@@ -28,6 +28,7 @@ def product(pid):
     return render_template("products/prod.html", pid=pid, row=my_result)
 
 
+# Use of session based on: https://roytuts.com/simple-shopping-cart-using-python-flask-mysql/
 @app.route('/add-to-cart', methods=["POST"])
 def add_to_cart():
     try:
