@@ -5,11 +5,6 @@ mydb = mysql.connector.connect(host="mysql1",
                                user="anonymous",
                                password="root",
                                database="the_shop")
-# remember to adjust
-# mydb = mysql.connector.connect(host="localhost",
-#                                user="root",
-#                                passwd="Melodi89",
-#                                database="the_shop")
 
 app = Flask(__name__)
 # secret key for session
@@ -48,18 +43,6 @@ def add_to_cart():
 
             session.modified = True
             if 'ShoppingCart' in session:
-
-                # if product_id in session['ShoppingCart']:
-                #     for key, my_product in session['ShoppingCart'].items():
-                #         if product_id == key:
-                #             prev_qty = session['ShoppingCart'][key]['quantity']
-                #             tot_qty = prev_qty + qty
-                #             session['ShoppingCart'][key]['quantity'] = tot_qty
-                #         # print("Product already in cart")
-                # else:
-                #     session['ShoppingCart'] = merging_arrays(session['ShoppingCart'], product_array)
-                #     # Redirecting to same page
-                #     return redirect(request.referrer)
                 session['ShoppingCart'] = merging_arrays(session['ShoppingCart'], product_array)
 
                 print(session['ShoppingCart'])
