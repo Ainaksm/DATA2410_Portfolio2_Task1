@@ -5,7 +5,7 @@ import mysql.connector
 # remember to adjust
 mydb = mysql.connector.connect(host="localhost",
                                user="root",
-                               passwd="Melodi89",
+                               passwd="CebrayilDovletzade",
                                database="the_shop")
 """my_cursor = mydb.cursor()
 my_cursor.execute("SELECT * FROM products")
@@ -116,7 +116,13 @@ def remove_product(pid):
 
 @app.route('/order')
 def order():
-    pass
+    total = 0
+    for key, my_product in session['ShoppingCart'].items():
+        discount = 100
+        total += int(my_product['price']) * int(my_product['quantity'])
+        amountToPay = total - total * (discount / 100)
+
+    return render_template('products/order.html', total=total, amountToPay=amountToPay, discount=discount)
 
 
 def merging_arrays(array, other_array):
@@ -131,5 +137,5 @@ def merging_arrays(array, other_array):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="localhost", debug=True)
     mydb.close()

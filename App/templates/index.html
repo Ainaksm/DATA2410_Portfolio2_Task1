@@ -36,6 +36,7 @@
                             </a>
                         </div>
                     </div>
+
                     <div class="col-md-8 mb-4">
                         <h5 class="card-title">{{ d[1] }}</h5>
                         <p>
@@ -50,9 +51,10 @@
                             <input type="hidden" name="product_id" value="{{ d[0] }}">
                             <button type="submit" class="btn btn-sm btn-warning">Add to Cart</button>
                             <label for="">Quantity:</label>
-                            <input type="number" class="product-quantity" name="quantity" value="" size="2"/>
+                            <input type="number" class="product-quantity" name="quantity" value="1" size="2"/>
                         </form>
                     </div>
+
                 </div>
                 <hr>
             {% endfor %}
