@@ -2,12 +2,15 @@ version: "3"
 
 services:
   app:
-    build: App
+    build: ./App
     container_name: "Flask_App"
     links:
       - db
     ports:
       - "5000:5000"
+    volumes:
+      - ./App/app.py:/var/app/app.py
+      - ./App/templates:/var/app/templates/
 
   db:
     image: mysql:5.7
