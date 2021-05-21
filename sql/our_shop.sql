@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS the_shop;
 USE the_shop;
-drop table products;
+
 -- Table structure for "products"-table
 CREATE TABLE IF NOT EXISTS products (
   id    INT unsigned NOT NULL AUTO_INCREMENT,
@@ -24,5 +24,5 @@ INSERT INTO products (pName, description, price, picture) VALUES
 ('Bucket', 'An ordinary bucket. Use it as a hat, use it to carry water, or use it to stand on.', 5555, 'https://images.unsplash.com/photo-1589630388147-68b3a2172e0c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80');
 
 # A user with read-only access to a single table
--- CREATE USER 'anonymous' IDENTIFIED BY 'root';
--- GRANT SELECT ON the_shop TO 'anonymous';
+CREATE USER 'anonymous'@'' IDENTIFIED BY 'root';
+GRANT SELECT ON the_shop.products TO 'anonymous'@'';
