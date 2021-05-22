@@ -1,3 +1,4 @@
+# By students: s339490 and s338849
 from flask import Flask, render_template, request, url_for, session, redirect
 import mysql.connector
 
@@ -43,14 +44,14 @@ def add_to_cart():
             product_array = {product_id: {'name': my_product[1], 'price': my_product[3], 'quantity': qty}}
 
             session.modified = True
-            if 'ShoppingCart' in session:
-                session['ShoppingCart'] = merging_arrays(session['ShoppingCart'], product_array)
+            if 'YourCart' in session:
+                session['YourCart'] = merging_arrays(session['YourCart'], product_array)
 
-                print(session['ShoppingCart'])
+                print(session['YourCart'])
                 # Redirecting to same page
                 return redirect(request.referrer)
             else:
-                session['ShoppingCart'] = product_array
+                session['YourCart'] = product_array
                 # Redirecting to same page
                 return redirect(request.referrer)
 
@@ -64,12 +65,12 @@ def add_to_cart():
 @app.route('/cart')
 def cart():
     # Redirecting to start-page if session not started or nothing is pur in the cart
-    if 'ShoppingCart' not in session or len(session['ShoppingCart']) <= 0:
+    if 'YourCart' not in session or len(session['YourCart']) <= 0:
         return redirect(url_for('index'))
 
     total = 0
     # Calculating grand total
-    for key, my_product in session['ShoppingCart'].items():
+    for key, my_product in session['YourCart'].items():
         total += int(my_product['price']) * int(my_product['quantity'])
 
     return render_template('products/cart.html', total=total)
@@ -78,14 +79,14 @@ def cart():
 @app.route('/remove-product/<int:pid>')
 def remove_product(pid):
     # Redirecting to start-page if session not started or nothing is pur in the cart
-    if 'ShoppingCart' not in session or len(session['ShoppingCart']) <= 0:
+    if 'YourCart' not in session or len(session['YourCart']) <= 0:
         return redirect(url_for('index'))
 
     try:
         session.modified = True
-        for key, products in session['ShoppingCart'].items():
+        for key, products in session['YourCart'].items():
             if int(key) == pid:
-                session['ShoppingCart'].pop(key, None)
+                session['YourCart'].pop(key, None)
                 return redirect(url_for('cart'))
     except Exception as e:
         print(e)
@@ -95,7 +96,7 @@ def remove_product(pid):
 @app.route('/order')
 def order():
     total = 0
-    for key, my_product in session['ShoppingCart'].items():
+    for key, my_product in session['YourCart'].items():
         discount = 100
         total += int(my_product['price']) * int(my_product['quantity'])
         amountToPay = total - total * (discount / 100)
